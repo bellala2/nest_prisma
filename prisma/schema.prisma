@@ -1,0 +1,84 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model book {
+  id         Int          @id @default(autoincrement())
+  title      String
+  author     String
+  year       Int
+  createdAt  DateTime     @default(now())
+  updatedAt  DateTime     @updatedAt
+  peminjaman peminjaman[]
+}
+
+model peminjaman {
+  id             Int               @id @default(autoincrement())
+  studentId      Int
+  bookId         Int
+  tanggalPinjam  DateTime          @default(now())
+  tanggalKembali DateTime?
+  status         peminjaman_status @default(DIPINJAM)
+  book           book              @relation(fields: [bookId], references: [id], map: "Peminjaman_bookId_fkey")
+  student        student           @relation(fields: [studentId], references: [id], map: "Peminjaman_studentId_fkey")
+  pengembalian   pengembalian?
+
+  @@index([bookId], map: "Peminjaman_bookId_fkey")
+  @@index([studentId], map: "Peminjaman_studentId_fkey")
+}
+
+model pengembalian {
+  id             Int        @id @default(autoincrement())
+  peminjamanId   Int        @unique(map: "Pengembalian_peminjamanId_key")
+  tanggalKembali DateTime   @default(now())
+  createdAt      DateTime   @default(now())
+  peminjaman     peminjaman @relation(fields: [peminjamanId], references: [id], onDelete: Cascade, map: "Pengembalian_peminjamanId_fkey")
+
+  @@index([peminjamanId], map: "Pengembalian_peminjamanId_idx")
+}
+
+model student {
+  id         Int          @id @default(autoincrement())
+  nis        String       @unique(map: "Student_nis_key")
+  name       String
+  email      String?      @unique(map: "Student_email_key")
+  kelas      String
+  jurusan    String
+  createdAt  DateTime     @default(now())
+  updatedAt  DateTime     @updatedAt
+  peminjaman peminjaman[]
+  user       user?
+}
+
+model user {
+  id        Int       @id @default(autoincrement())
+  username  String    @unique(map: "User_username_key")
+  password  String
+  role      user_role
+  studentId Int?      @unique(map: "User_studentId_key")
+  createdAt DateTime  @default(now())
+  student   student?  @relation(fields: [studentId], references: [id], map: "User_studentId_fkey")
+}
+
+model walas {
+  id_walas   Int    @id @default(autoincrement())
+  nama_walas String
+  no_tlp     String
+  alamat     String
+}
+
+enum user_role {
+  ADMIN
+  PETUGAS
+  MEMBER
+}
+
+enum peminjaman_status {
+  DIPINJAM
+  DIKEMBALIKAN
+}
