@@ -10,7 +10,7 @@ import { PrismaModule } from '../../prisma/prisma.module';
   imports: [
     PrismaModule,
     PassportModule,
-    JwtModule.register({ // Ganti jadi register biasa
+    JwtModule.register({ 
       secret: 'NEST_PRISMA',
       signOptions: { expiresIn: '1h' },
     }),
