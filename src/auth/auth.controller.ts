@@ -2,14 +2,12 @@ import { Controller, Post, Body, UseGuards, Req } from '@nestjs/common';
 import { ApiTags, ApiOperation } from '@nestjs/swagger';
 import { AuthService } from './auth.service';
 import { LoginDto } from './dto/login.dto';
-import { JwtAuthGuard } from './guards/jwt-auth.guard'; 
 
 @ApiTags('Auth')
 @Controller('auth')
 export class AuthController {
   constructor(private authService: AuthService) { }
 
-  @UseGuards(JwtAuthGuard) 
   @Post('register')
   @ApiOperation({ summary: 'Mendaftarkan user baru' })
   register(@Body() dto: any, @Req() req: any) { 
