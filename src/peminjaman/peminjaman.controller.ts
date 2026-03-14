@@ -8,11 +8,10 @@ import { user_role } from '@prisma/client';
 
 
 @Controller('peminjaman')
-@UseGuards(JwtAuthGuard) // semua endpoint wajib login
+@UseGuards(JwtAuthGuard) 
 export class PeminjamanController {
   constructor(private readonly peminjamanService: PeminjamanService) {}
 
-  // 🔍 ADMIN & PETUGAS → lihat semua peminjaman
   @UseGuards(RolesGuard)
   @Roles(user_role.ADMIN, user_role.PETUGAS)
   @Get()
