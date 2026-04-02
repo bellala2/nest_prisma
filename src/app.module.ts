@@ -11,24 +11,15 @@ import { AuthModule } from './auth/auth.module';
 
 
 @Module({
-  imports: [
-    PrismaModule,
-    StudentsModule,
-    BookModule,
-    PeminjamanModule,
-    PengembalianModule,
-    AuthModule,
-    ConfigModule.forRoot({
+  imports: [PrismaModule,StudentsModule,BookModule,PeminjamanModule,PengembalianModule,AuthModule,ConfigModule.
+    forRoot({
       isGlobal: true,
-      envFilePath:
-        process.env.NODE_ENV === 'production'
-          ? '.env.production'
-          : '.env',
+      envFilePath: '.env',
     }),
   ],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule { }
 
 
