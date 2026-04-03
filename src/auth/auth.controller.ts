@@ -13,9 +13,11 @@ export class AuthController {
 
   @Post('register')
   @ApiOperation({ summary: 'Mendaftarkan user baru' })
-  register(@Body() dto: RegisterDto, @Req() req: any) {
+  register(@Body() dto: RegisterDto){
+  // @Req() req: any) 
     
-    const roleYgLogin = req.user?.role || 'USER'; 
+  const roleYgLogin = 'ADMIN';
+  //const roleYgLogin = req.user?.role || 'USER'; 
     return this.authService.register(dto, roleYgLogin);
   }
 
