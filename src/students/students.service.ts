@@ -24,15 +24,9 @@ export class StudentsService {
     return this.prisma.student.create({ data });
   }
 
-  findAll(name?: string) {
-    return this.prisma.student.findMany({
-      where: name
-        ? {
-            name: { contains: name },
-          }
-        : {},
-    });
-  }
+  async findAll() {
+  return this.prisma.student.findMany(); 
+}
 
   async findOne(id: number) {
     const student = await this.prisma.student.findUnique({ where: { id } });

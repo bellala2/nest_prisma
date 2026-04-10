@@ -22,8 +22,8 @@ export class StudentsController {
   }
 
   @Get()
-  findAll(@Query('name') name?: string) {
-    return this.studentsService.findAll(name);
+  findAll() {
+    return this.studentsService.findAll();
   }
 
   @Get(':id')
