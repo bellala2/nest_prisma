@@ -25,6 +25,8 @@ console.log('Role yang diminta:', requiredRoles);
     if (!user || !user.role) {
       return false;
     }
-    return requiredRoles.includes(user.role);
+    return requiredRoles.some(
+  (role) => role.toString() === user.role.toString(),
+);
   }
 }
