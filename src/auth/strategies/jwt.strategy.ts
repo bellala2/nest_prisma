@@ -12,12 +12,6 @@ export class JwtStrategy extends
         });
     }
     validate(payload: any) {
-    return {
-      userId: payload.sub,
-      username: payload.username,
-      role: payload.role,
-      studentId: payload.studentId, 
-    };
-    
-    }
+  return payload; 
+}
 } 
