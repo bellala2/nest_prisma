@@ -7,7 +7,7 @@ import { Roles } from '../auth/decorators/roles.decorator';
 import { user_role } from '@prisma/client';
 import { ApiBearerAuth } from '@nestjs/swagger';
 
-@ApiBearerAuth()
+@ApiBearerAuth('bearer')
 @Controller('peminjaman')
 @UseGuards(JwtAuthGuard) 
 export class PeminjamanController {
@@ -36,7 +36,8 @@ export class PeminjamanController {
   @UseGuards(RolesGuard)
   @Roles(user_role.ADMIN, user_role.PETUGAS)
   @Post()
-  create(@Body() dto: CreatePeminjamanDto) {
+  create(@Body() dto: CreatePeminjamanDto, @Req() req) {
+    console.log('USER:', req.user);
     return this.peminjamanService.create(dto);
   }
 

@@ -9,7 +9,7 @@ import { user_role } from '@prisma/client';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
 @ApiTags('Students')
-@ApiBearerAuth()
+@ApiBearerAuth('bearer')
 @Controller('students')
 @UseGuards(JwtAuthGuard, RolesGuard)
 @Roles(user_role.ADMIN)

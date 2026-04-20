@@ -10,7 +10,7 @@ import { user_role } from '@prisma/client';
 
 @Controller('book')
 @ApiTags('Books') 
-@ApiBearerAuth() 
+@ApiBearerAuth('bearer')
 @Controller('books') 
 export class BookController {
   constructor(private readonly bookService: BookService) {}
