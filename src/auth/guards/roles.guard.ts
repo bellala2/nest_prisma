@@ -26,7 +26,8 @@ console.log('Role yang diminta:', requiredRoles);
       return false;
     }
     return requiredRoles.some(
-  (role) => role.toString() === user.role.toString(),
+  (role) =>
+    role.toString().toLowerCase() === user.role?.toString().toLowerCase(),
 );
   }
 }
