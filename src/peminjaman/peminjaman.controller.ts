@@ -17,14 +17,8 @@ export class PeminjamanController {
   @UseGuards(RolesGuard)
   @Roles(user_role.ADMIN, user_role.PETUGAS)
   @Get()
-  getAll(
-    @Query('date') date?: string,
-    @Query('id') id?: string,
-  ) {
-    return this.peminjamanService.findAll({
-      date,
-      id: id ? Number(id) : undefined,
-    });
+  findAll() {
+    return this.peminjamanService.findAll();
   }
 
   @UseGuards(RolesGuard)

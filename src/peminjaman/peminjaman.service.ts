@@ -18,33 +18,9 @@ export class PeminjamanService {
     });
   }
 
-  findAll(filter?: { id?: number; date?: string }) {
-    const where: any = {};
-
-    if (filter?.id) {
-      where.id = filter.id;
-    }
-
-    if (filter?.date) {
-      const start = new Date(filter.date);
-      const end = new Date(filter.date);
-      end.setDate(end.getDate() + 1);
-
-      where.tanggalPinjam = {
-        gte: start,
-        lt: end,
-      };
-    }
-
-    return this.prisma.peminjaman.findMany({
-      where,
-      include: {
-        student: true,
-        book: true,
-      },
-    });
-  }
-
+   async findAll() {
+  return this.prisma.peminjaman.findMany(); 
+}
   async findByStudent(userId: number) {
     return this.prisma.peminjaman.findMany({
       where: {
