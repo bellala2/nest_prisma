@@ -6,9 +6,9 @@ import { ValidationPipe } from '@nestjs/common';
 async function bootstrap() { 
   const app = await NestFactory.create(AppModule); 
   console.log("SERVER NYALA, JWT_SECRET ADALAH:", process.env.JWT_SECRET);
-  
+
   app.enableCors();
-  app.useGlobalPipes(new ValidationPipe()); 
+  //app.useGlobalPipes(new ValidationPipe()); 
  
   const config = new DocumentBuilder() 
     .setTitle('Library API') 
