@@ -13,8 +13,8 @@ import { ApiBearerAuth } from '@nestjs/swagger';
 export class PeminjamanController {
   constructor(private readonly peminjamanService: PeminjamanService) {}
 
-  @UseGuards(RolesGuard)
-  @Roles(user_role.ADMIN, user_role.PETUGAS)
+  //@UseGuards(RolesGuard)
+  //@Roles(user_role.ADMIN, user_role.PETUGAS)
   @Get()
   findAll() {
     return this.peminjamanService.findAll();
@@ -24,16 +24,16 @@ export class PeminjamanController {
     return this.peminjamanService.findByStudent(req.user.sub);
   }
 
-  @UseGuards(RolesGuard)
-  @Roles(user_role.ADMIN, user_role.PETUGAS)
+ // @UseGuards(RolesGuard)
+ // @Roles(user_role.ADMIN, user_role.PETUGAS)
   @Get(':id')
   getOne(@Param('id') id: string) {
     return this.peminjamanService.findOne(+id);
   }
 
+ // @UseGuards(RolesGuard)
+  //@Roles(user_role.ADMIN, user_role.PETUGAS)
   @Post()
-  @UseGuards(RolesGuard)
-  @Roles(user_role.ADMIN, user_role.PETUGAS)
   create(@Body() dto: CreatePeminjamanDto, @Req() req) {
     console.log('USER:', req.user);
     return this.peminjamanService.create(dto);
