@@ -23,11 +23,13 @@ export class RolesGuard implements CanActivate {
 console.log('Role yang diminta:', requiredRoles);
 
     if (!user || !user.role) {
-      return false;
-    }
-    return requiredRoles.some(
+  console.log('ROLE TIDAK ADA DI TOKEN');
+  return false;
+}
+
+return requiredRoles.some(
   (role) =>
-    role.toString().toLowerCase() === user.role?.toString().toLowerCase(),
+    role.toString().toLowerCase() === user.role.toString().toLowerCase(),
 );
   }
 }
