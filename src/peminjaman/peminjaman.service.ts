@@ -8,23 +8,27 @@ export class PeminjamanService {
   constructor(private prisma: PrismaService) {}
 
   async create(dto: CreatePeminjamanDto) {
-    // 1. Validasi Student
+
     const student = await this.prisma.student.findUnique({ where: { id: dto.studentId } });
     if (!student) throw new NotFoundException('Student tidak ditemukan');
 
-    // 2. Validasi Book
     const book = await this.prisma.book.findUnique({ where: { id: dto.bookId } });
     if (!book) throw new NotFoundException('Book tidak ditemukan');
 
-    // 3. Validasi: Apakah buku lagi dipinjam orang lain?
     const masihDipinjam = await this.prisma.peminjaman.findFirst({
-      where: { bookId: dto.bookId, status: 'DIPINJAM' },
+      where: { 
+        bookId: dto.bookId, 
+        status: 'DIPINJAM' 
+      },
     });
-    if (masihDipinjam) throw new BadRequestException('Buku ini sedang dalam status DIPINJAM');
+
+    if (masihDipinjam) {
+      throw new BadRequestException('Buku ini sedang dalam status DIPINJAM');
+    }
 
     const tglPinjam = new Date();
     const tglKembali = new Date();
-    tglKembali.setDate(tglPinjam.getDate() + 7); // Tambah 7 hari
+    tglKembali.setDate(tglPinjam.getDate() + 7); 
     
     return this.prisma.peminjaman.create({ 
       data: {
